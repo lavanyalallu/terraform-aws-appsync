@@ -1,5 +1,7 @@
-type Mutation {
-  putPost(id: ID!, title: String!): Post
+
+# Example GraphQL schema for DynamoDB getItem
+type Item {
+  id: String!
 }
 
 type Post {
@@ -13,15 +15,20 @@ type User {
 }
 
 type Comment {
-  id: ID !
+  id: ID!
   comment: String!
 }
 
 type Query {
+  getItem(id: String!): Item
   singlePost(id: ID!): Post
   none(dummyString: String!): String!
   user(id: ID!): User
   singleComment(id: ID!): Comment
+}
+
+type Mutation {
+  putPost(id: ID!, title: String!): Post
 }
 
 schema {

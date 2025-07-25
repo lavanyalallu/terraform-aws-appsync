@@ -15,20 +15,20 @@ output "appsync_graphql_api_uris" {
 }
 
 #Domain
-output "appsync_domain_id" {
-  description = "The Appsync Domain name"
-  value       = module.appsync.appsync_domain_id
-}
+# output "appsync_domain_id" {
+#   description = "The Appsync Domain name"
+#   value       = module.appsync.appsync_domain_id
+# }
 
-output "appsync_domain_name" {
-  description = "The domain name AppSync provides"
-  value       = module.appsync.appsync_domain_name
-}
+# output "appsync_domain_name" {
+#   description = "The domain name AppSync provides"
+#   value       = module.appsync.appsync_domain_name
+# }
 
-output "appsync_domain_hosted_zone_id" {
-  description = "The ID of your Amazon Route 53 hosted zone"
-  value       = module.appsync.appsync_domain_hosted_zone_id
-}
+# output "appsync_domain_hosted_zone_id" {
+#   description = "The ID of your Amazon Route 53 hosted zone"
+#   value       = module.appsync.appsync_domain_hosted_zone_id
+# }
 
 # API Key
 output "appsync_api_key_id" {
@@ -58,4 +58,7 @@ output "appsync_resolver_arn" {
 output "appsync_graphql_api_fqdns" {
   description = "Map of FQDNs associated with the API (no protocol and path)"
   value       = module.appsync.appsync_graphql_api_fqdns
+}
+output "current_region" {
+  value = data.aws_region.current.name
 }
