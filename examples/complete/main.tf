@@ -109,11 +109,11 @@ module "appsync" {
   # domain_name_description = "My ${random_pet.this.id} AppSync Domain"
   # certificate_arn         = var.use_existing_acm_certificate ? data.aws_acm_certificate.existing_certificate[0].arn : module.acm[0].acm_certificate_arn
 
-  caching_behavior                 = "PER_RESOLVER_CACHING"
-  cache_type                       = "SMALL"
-  cache_ttl                        = 60
-  cache_at_rest_encryption_enabled = true
-  cache_transit_encryption_enabled = true
+  # caching_behavior                 = "PER_RESOLVER_CACHING"
+  # cache_type                       = "SMALL"
+  # cache_ttl                        = 60
+  # cache_at_rest_encryption_enabled = true
+  # cache_transit_encryption_enabled = true
 
 
   authentication_type = "AWS_IAM"
@@ -146,6 +146,49 @@ EOF
 #end
 EOF
     }
+  }
+}
+
+resource "aws_appsync_function" "get_item" {
+  api_id                    = module.appsync.appsync_graphql_api_id
+  data_source               = module.appsync.datasource_names["dynamodb1"]
+  name                      = "GetItemFunction"
+  request_mapping_template  = <<EOF
+{
+  "version": "2018-05-29",
+  "operation": "GetItem",
+  "key": {
+    "id": { "S": "$ctx.args.id" }
+  }
+}
+EOF
+  response_mapping_template = "$util.toJson($ctx.result)"
+}
+
+resource "aws_appsync_function" "log_item" {
+  api_id                    = module.appsync.appsync_graphql_api_id
+  data_source               = module.appsync.datasource_names["dynamodb1"]
+  name                      = "LogItemLogFunction"
+  request_mapping_template  = <<EOF
+$util.toJson($ctx.prev.result)
+EOF
+  response_mapping_template = "$util.toJson($ctx.result)"
+}
+
+resource "aws_appsync_resolver" "get_item_pipeline" {
+  api_id      = module.appsync.appsync_graphql_api_id
+  type        = "Query"
+  field       = "getItemPipeline"
+  kind        = "PIPELINE"
+
+  request_template  = "{}"
+  response_template = "$util.toJson($ctx.result)"
+
+  pipeline_config {
+    functions = [
+      aws_appsync_function.get_item.function_id,
+      aws_appsync_function.log_item.function_id
+    ]
   }
 }
 
@@ -422,6 +465,14 @@ module "dynamodb_table1" {
       type = "S"
     }
   ]
+}
+
+resource "aws_dynamodb_table_item" "test" {
+  table_name = module.dynamodb_table1.dynamodb_table_id
+  hash_key   = "id"
+  item = jsonencode({
+    id = { S = "test-1" }
+  })
 }
 
 ###########

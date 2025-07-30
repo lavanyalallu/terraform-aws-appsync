@@ -32,6 +32,11 @@ output "appsync_datasource_arn" {
   value       = { for k, v in aws_appsync_datasource.this : k => v.arn }
 }
 
+output "datasource_names" {
+  description = "Map of names of datasources"
+  value       = { for k, v in aws_appsync_datasource.this : k => v.name }
+}
+
 # Resolvers
 output "appsync_resolver_arn" {
   description = "Map of ARNs of resolvers"
@@ -74,4 +79,8 @@ output "appsync_domain_hosted_zone_id" {
 output "appsync_graphql_api_fqdns" {
   description = "Map of FQDNs associated with the API (no protocol and path)"
   value       = { for k, v in try(aws_appsync_graphql_api.this[0].uris, []) : k => regex("://([^/?#]*)?", v)[0] if length(aws_appsync_graphql_api.this) > 0 }
+}
+
+output "appsync_api_id" {
+  value = try(aws_appsync_graphql_api.this[0].id, null)
 }

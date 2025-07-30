@@ -155,65 +155,65 @@ variable "certificate_arn" {
   default     = ""
 }
 
-# API Cache
-variable "caching_behavior" {
-  description = "Caching behavior."
-  type        = string
-  default     = "FULL_REQUEST_CACHING"
+# # API Cache
+# variable "caching_behavior" {
+#   description = "Caching behavior."
+#   type        = string
+#   default     = "FULL_REQUEST_CACHING"
 
-  validation {
-    condition = contains([
-      "FULL_REQUEST_CACHING",
-      "PER_RESOLVER_CACHING"
-    ], var.caching_behavior)
-    error_message = "Allowed values for input_parameter are \"FULL_REQUEST_CACHING\", or \"PER_RESOLVER_CACHING\"."
-  }
-}
+#   validation {
+#     condition = contains([
+#       "FULL_REQUEST_CACHING",
+#       "PER_RESOLVER_CACHING"
+#     ], var.caching_behavior)
+#     error_message = "Allowed values for input_parameter are \"FULL_REQUEST_CACHING\", or \"PER_RESOLVER_CACHING\"."
+#   }
+# }
 
-variable "cache_type" {
-  description = "The cache instance type."
-  type        = string
-  default     = "SMALL"
+# variable "cache_type" {
+#   description = "The cache instance type."
+#   type        = string
+#   default     = "SMALL"
 
-  validation {
-    condition = contains([
-      "SMALL",
-      "MEDIUM",
-      "LARGE",
-      "XLARGE",
-      "LARGE_2X",
-      "LARGE_4X",
-      "LARGE_8X",
-      "LARGE_12X",
-      "T2_SMALL",
-      "T2_MEDIUM",
-      "R4_LARGE",
-      "R4_XLARGE",
-      "R4_2XLARGE",
-      "R4_4XLARGE",
-      "R4_8XLARGE"
-    ], var.cache_type)
-    error_message = "Allowed values for input_parameter are \"SMALL\", \"MEDIUM\", \"LARGE\", \"XLARGE\", \"LARGE_2X\", \"LARGE_4X\", \"LARGE_8X\", \"LARGE_12X\", \"T2_SMALL\", \"T2_MEDIUM\", \"R4_LARGE\", \"R4_XLARGE\", \"R4_2XLARGE\", \"R4_4XLARGE\", or \"R4_8XLARGE\"."
-  }
-}
+#   validation {
+#     condition = contains([
+#       "SMALL",
+#       "MEDIUM",
+#       "LARGE",
+#       "XLARGE",
+#       "LARGE_2X",
+#       "LARGE_4X",
+#       "LARGE_8X",
+#       "LARGE_12X",
+#       "T2_SMALL",
+#       "T2_MEDIUM",
+#       "R4_LARGE",
+#       "R4_XLARGE",
+#       "R4_2XLARGE",
+#       "R4_4XLARGE",
+#       "R4_8XLARGE"
+#     ], var.cache_type)
+#     error_message = "Allowed values for input_parameter are \"SMALL\", \"MEDIUM\", \"LARGE\", \"XLARGE\", \"LARGE_2X\", \"LARGE_4X\", \"LARGE_8X\", \"LARGE_12X\", \"T2_SMALL\", \"T2_MEDIUM\", \"R4_LARGE\", \"R4_XLARGE\", \"R4_2XLARGE\", \"R4_4XLARGE\", or \"R4_8XLARGE\"."
+#   }
+# }
 
-variable "cache_ttl" {
-  description = "TTL in seconds for cache entries"
-  type        = number
-  default     = 1
-}
+# variable "cache_ttl" {
+#   description = "TTL in seconds for cache entries"
+#   type        = number
+#   default     = 1
+# }
 
-variable "cache_at_rest_encryption_enabled" {
-  description = "At-rest encryption flag for cache."
-  type        = bool
-  default     = false
-}
+# variable "cache_at_rest_encryption_enabled" {
+#   description = "At-rest encryption flag for cache."
+#   type        = bool
+#   default     = false
+# }
 
-variable "cache_transit_encryption_enabled" {
-  description = "Transit encryption flag when connecting to cache."
-  type        = bool
-  default     = false
-}
+# variable "cache_transit_encryption_enabled" {
+#   description = "Transit encryption flag when connecting to cache."
+#   type        = bool
+#   default     = false
+# }
 
 # API Keys
 variable "api_keys" {

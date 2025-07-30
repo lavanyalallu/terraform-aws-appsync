@@ -28,26 +28,6 @@ variable "region" {
 #   default     = "terraform-aws-modules.modules.tf"
 # }
 
-variable "resolvers" {
-  default = {
-    "Query.getItem" = {
-      data_source      = "dynamodb1"
-      request_template = <<EOF
-{
-  "version": "2018-05-29",
-  "operation": "GetItem",
-  "key": {
-    "id": { "S": "$ctx.args.id" }
-  }
-}
-EOF
-      response_template = <<EOF
-#if($ctx.result)
-  $util.toJson($ctx.result)
-#else
-  $util.toJson({})
-#end
-EOF
-    }
-  }
-}
+# variable "resolvers" {
+#   default = {}
+# }
